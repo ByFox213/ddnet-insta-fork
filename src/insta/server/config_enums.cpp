@@ -18,7 +18,7 @@ CConfigEnums::CConfigEnums()
 
 void CConfigEnums::RegisterChains(CGameContext *pGameServer)
 {
-#define LINK_CONFIG(ConfigName, ConfigScriptName, EnumName) \
+#define LINK_CONFIG(ConfigName, ConfigScriptName, EnumName, EnumValues) \
 	pGameServer->Console()->Chain(#ConfigScriptName, Conchain##ConfigName, pGameServer);
 #include <insta/server/enum_variables.h>
 #undef LINK_CONFIG

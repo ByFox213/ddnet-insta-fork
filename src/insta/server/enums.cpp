@@ -108,10 +108,26 @@ bool str_to_weapon(const char *pInput, int *pWeapon)
 	return true;
 }
 
-#define LINK_CONFIG(ConfigName, ConfigScriptName, EnumName) \
+#define X(val) \
+	if(MatchValue(#val, CURRENT_PARSING_ENUM::val)) \
+		return true;
+
+#define LINK_CONFIG(ConfigName, ConfigScriptName, EnumName, EnumValues) \
 	bool str_to_##EnumName(const char *pInput, EnumName *pValue) \
 	{ \
-		*pValue = EnumName::
-}
-#include <insta/server/config_enums.h>
+		if(!pInput || pInput[0] == '\0') \
+			return false; \
+		using CURRENT_PARSING_ENUM = EnumName; \
+		auto MatchValue = [&](const char *pStr, CURRENT_PARSING_ENUM Val) -> bool { \
+			if(!str_comp_nocase(pInput, pStr)) \
+			{ \
+				*pValue = Val; \
+				return true; \
+			} \
+			return false; \
+		}; \
+		EnumValues return false; \
+	}
+#include <insta/server/enum_variables.h>
 #undef LINK_CONFIG
+#undef X

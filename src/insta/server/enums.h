@@ -95,8 +95,8 @@ const char *display_score_to_str(EDisplayScore Score);
 // returns false on no match
 bool str_to_weapon(const char *pInput, int *pWeapon);
 
-#define LINK_CONFIG(ConfigName, ConfigScriptName, EnumName) bool str_to_##EnumName(const char *pInput, EnumName *pValue);
-#include <insta/server/config_enums.h>
+#define LINK_CONFIG(ConfigName, ConfigScriptName, EnumName, EnumValues)
+#include <insta/server/enum_variables.h>
 #undef LINK_CONFIG
 
 enum class EBombWeapon
@@ -105,5 +105,10 @@ enum class EBombWeapon
 	BOMB_WEAPON_ENUM
 #undef X
 };
+
+#define LINK_CONFIG(ConfigName, ConfigScriptName, EnumName, EnumValues) \
+	bool str_to_##EnumName(const char *pInput, EnumName *pValue);
+#include <insta/server/enum_variables.h>
+#undef LINK_CONFIG
 
 #endif
